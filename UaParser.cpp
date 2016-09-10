@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cstdlib>
 
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>
@@ -37,7 +38,7 @@ struct AgentStore : GenericStore {
 void mark_placeholders(i2tuple& replacement_map, const std::string& device_property) {
   auto loc = device_property.rfind("$");
   while (loc != std::string::npos) {
-    replacement_map[loc] = std::stoi(device_property.substr(loc + 1, 1));
+    replacement_map[loc] = (unsigned int) strtol(device_property.substr(loc + 1, 1).c_str(), NULL, 10);
 
     if (loc < 2)
       break;
